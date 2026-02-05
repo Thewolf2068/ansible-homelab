@@ -1,0 +1,70 @@
+services:
+  booklore:
+    image: booklore/booklore:latest
+    # Alternative: Use GitHub Container Registry
+    # image: ghcr.io/booklore-opt/docker/standard/booklore:latest
+    container_name: booklore
+    env_file:
+      - .env
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "${BOOKLORE_PORT}:${BOOKLORE_PORT}" 
+    volumes:
+      - /opt/docker/standard/booklore/data:/opt/docker/standard/data
+      - /media/books/library:/books
+      - /media/books/bookdrop:/bookdrop
+    restart: unless-stopped
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb
+    env_file:
+      - .env
+    environment:
+      - PUID=${DB_USER_ID}
+      - PGID=${DB_GROUP_ID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - /opt/docker/standard/booklore/mariadb:/config
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+
+
+  ephemera:
+    image: ghcr.io/orwellianepilogue/ephemera:latest
+    container_name: ephemera
+    restart: unless-stopped
+    ports:
+      - "8286:8286"
+    env_file:
+      - .env
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    volumes:
+      - /opt/docker/standard/epherma/data:/app/data
+      - /opt/docker/standard/epherma/downloads:/app/downloads
+      # Optional: Map this to your Booklore ingest folder if you want auto-import
+      - /media/books/bookdrop:/app/ingest
+    depends_on:
+      - flaresolverr
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: ephemera-flaresolverr
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - "8191:8191"

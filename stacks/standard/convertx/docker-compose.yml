@@ -1,0 +1,11 @@
+# docker-compose.yml
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx
+    container_name: convertx
+    restart: unless-stopped
+    ports:
+      - "3131:3000"
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/convertx/data:/app/data

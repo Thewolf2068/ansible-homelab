@@ -1,0 +1,30 @@
+services:
+  slskd:
+    image: slskd/slskd
+    container_name: slskd
+    user: 1001:1001
+    ports:
+      - "5030:5030"
+      - "5031:5031"
+      - "50300:50300"
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/music/slskd:/app
+      - "/media/music:/music"
+    restart: always
+  
+      
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1001:1001 # should be owner of volumes
+    ports:
+      - "4533:4533"
+    env_file: .env
+    restart: unless-stopped
+    environment:
+      # Optional: put your config options customization here. Examples:
+       ND_LOGLEVEL: debug
+    volumes:
+      - "/opt/docker/standard/music/navidrome/data:/data"
+      - "/media/music:/music:ro"
+

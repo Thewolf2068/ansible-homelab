@@ -1,0 +1,44 @@
+- name: Initial Server Setup
+  hosts: myhosts
+  become: true
+  vars_files:
+    - ../group_vars/all/vault.yml
+
+  tasks:
+    # --- System Basics ---
+    - name: Update apt cache and upgrade packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+        cache_valid_time: 3600
+
+    - name: Install required system packages
+      apt:
+        name: [curl, git, ufw, python3-pip, python3-docker]
+        state: present
+
+    # --- User Setup ---
+    # Creates the user defined in your vars.yml (e.g., 'homelab_admin')
+    - name: Create administration user
+      user:
+        name: "{{ server_user }}"
+        groups: docker,sudo
+        append: yes
+        shell: /bin/bash
+        state: present
+
+    # --- Docker Setup ---
+    - name: Install Docker (Official Script)
+      shell: "curl -fsSL https://get.docker.com | sh"
+      args:
+        creates: /usr/bin/docker
+
+    # --- Directory Setup ---
+    # This creates /opt/stacks (or whatever you defined in vars.yml)
+    - name: Create stacks directory
+      file:
+        path: "{{ docker_compose_path }}"
+        state: directory
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0755'
