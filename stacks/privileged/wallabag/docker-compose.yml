@@ -1,6 +1,6 @@
 services:
   wallabag:
-    image: wallabag/wallabag
+    image: wallabag/wallabag:${WALLABAG_VERSION}
     container_name: wallabag
     env_file:
       - .env

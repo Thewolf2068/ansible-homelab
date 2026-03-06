@@ -1,6 +1,6 @@
 services:
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:latest
+    image: ghcr.io/advplyr/audiobookshelf:${AUDIOBOOKSHELF_VERSION}
     env_file: .env
     ports:
       - 13378:80
@@ -13,7 +13,7 @@ services:
       net.ipv6.conf.all.disable_ipv6: 1
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
+    image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_VERSION}
     container_name: qbittorrent
     env_file: .env
     volumes:

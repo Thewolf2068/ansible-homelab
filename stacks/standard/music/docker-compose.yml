@@ -1,6 +1,6 @@
 services:
   slskd:
-    image: slskd/slskd
+    image: slskd/slskd:${SLSKD_VERSION}
     container_name: slskd
     user: 1001:1001
     ports:
@@ -15,7 +15,7 @@ services:
   
       
   navidrome:
-    image: deluan/navidrome:latest
+    image: deluan/navidrome:${NAVIDROME_VERSION}
     user: 1001:1001 # should be owner of volumes
     ports:
       - "4533:4533"

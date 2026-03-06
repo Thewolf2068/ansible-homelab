@@ -23,12 +23,12 @@
 # documentation.
 services:
   broker:
-    image: docker.io/library/redis:8
+    image: docker.io/library/redis:${PAPERLESS_BROKER_VERSION} 
     restart: unless-stopped
     volumes:
       - /opt/docker/standard/paperless-ngx/redisdata:/data
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: ghcr.io/paperless-ngx/paperless-ngx:${PAPERLESS_VERSION}
     restart: unless-stopped
     depends_on:
       - broker

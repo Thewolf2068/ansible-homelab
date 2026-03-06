@@ -1,6 +1,6 @@
 services:
   homepage:
-    image: ghcr.io/gethomepage/homepage:latest
+    image: ghcr.io/gethomepage/homepage:${homepage_version}
     restart: unless-stopped
     container_name: homepage
     ports:

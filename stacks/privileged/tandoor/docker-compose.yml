@@ -1,7 +1,7 @@
 services:
   db_recipes:
     restart: always
-    image: postgres:16-alpine
+    image: postgres:${TANDOOR_DB_VERSION}
     volumes:
       - /opt/docker/privileged/tandoor/postgresql:/var/lib/postgresql/data
     env_file:
@@ -9,7 +9,7 @@ services:
 
   web_recipes:
     restart: always
-    image: vabene1111/recipes
+    image: vabene1111/recipes:${TANDOOR_VERSION}
     ports:
       - 7010:80
     env_file:

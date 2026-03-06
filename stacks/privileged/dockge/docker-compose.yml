@@ -1,11 +1,11 @@
 services:
   dockge:
-    image: louislam/dockge:1
+    image: louislam/dockge:${DOCKGE_VERSION}
     restart: unless-stopped
     ports:
       - "5001:5001"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
       - /opt/docker/privileged/dockge:/app/data
       - /opt/stacks:/opt/stacks
     environment:

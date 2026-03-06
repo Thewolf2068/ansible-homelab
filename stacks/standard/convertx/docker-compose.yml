@@ -1,7 +1,7 @@
 # docker-compose.yml
 services:
   convertx:
-    image: ghcr.io/c4illin/convertx
+    image: ghcr.io/c4illin/convertx:${CONVERTX_VERSION}
     container_name: convertx
     restart: unless-stopped
     ports:

@@ -1,6 +1,6 @@
 services:
   booklore:
-    image: booklore/booklore:latest
+    image: booklore/booklore:${BOOKLORE_VERSION}
     # Alternative: Use GitHub Container Registry
     # image: ghcr.io/booklore-opt/docker/standard/booklore:latest
     container_name: booklore
@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   mariadb:
-    image: lscr.io/linuxserver/mariadb:11.4.5
+    image: lscr.io/linuxserver/mariadb:${BOOKLORE_MARIADB_VERSION}
     container_name: mariadb
     env_file:
       - .env
@@ -38,33 +38,3 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-
-
-
-
-  ephemera:
-    image: ghcr.io/orwellianepilogue/ephemera:latest
-    container_name: ephemera
-    restart: unless-stopped
-    ports:
-      - "8286:8286"
-    env_file:
-      - .env
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-    volumes:
-      - /opt/docker/standard/epherma/data:/app/data
-      - /opt/docker/standard/epherma/downloads:/app/downloads
-      # Optional: Map this to your Booklore ingest folder if you want auto-import
-      - /media/books/bookdrop:/app/ingest
-    depends_on:
-      - flaresolverr
-
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: ephemera-flaresolverr
-    env_file: .env
-    restart: unless-stopped
-    ports:
-      - "8191:8191"

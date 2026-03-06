@@ -1,6 +1,6 @@
 services:
   couchdb:
-    image: couchdb:latest
+    image: couchdb:${COUCHDB_VERSION}
     container_name: couchdb-for-ols
     user: 1001:1001
     env_file: .env

@@ -1,6 +1,6 @@
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:2
+    image: louislam/uptime-kuma:${UPTIME_KUMA_VERSION}
     restart: unless-stopped
     volumes:
       - /opt/docker/privileged/uptime-kuma:/app/data
