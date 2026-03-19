@@ -1,40 +1,32 @@
 services:
-  booklore:
-    image: booklore/booklore:${BOOKLORE_VERSION}
-    # Alternative: Use GitHub Container Registry
-    # image: ghcr.io/booklore-opt/docker/standard/booklore:latest
-    container_name: booklore
-    env_file:
-      - .env
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    ports:
-      - "${BOOKLORE_PORT}:${BOOKLORE_PORT}" 
+  calibre:
+    image: lscr.io/linuxserver/calibre:${CALIBRE_VERSION}
+    container_name: calibre
+    env_file: .env
+    security_opt:
+      - seccomp:unconfined #optional
     volumes:
-      - /opt/docker/standard/booklore/data:/opt/docker/standard/data
-      - /media/books/library:/books
-      - /media/books/bookdrop:/bookdrop
+      # config location
+      - /opt/docker/standard/books/calibre/config:/config
+      # statging location, basically for metadata and stuff
+      - /opt/docker/standard/books/calibre/library:/library
+      # Final export location, ready for syncing!
+      - /media/books:/media/books
+    ports:
+      - 8183:8080
+    shm_size: "1gb"
     restart: unless-stopped
 
-  mariadb:
-    image: lscr.io/linuxserver/mariadb:${BOOKLORE_MARIADB_VERSION}
-    container_name: mariadb
-    env_file:
-      - .env
-    environment:
-      - PUID=${DB_USER_ID}
-      - PGID=${DB_GROUP_ID}
-      - TZ=${TZ}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - /opt/docker/standard/booklore/mariadb:/config
+  kosync:
+    container_name: kosync
+    # TO MAKE ARM64 COMPATIBLE, DONT CHANGE!!!!!
+    build: 
+      context: https://github.com/jberlyn/kosync-dotnet.git#main
+      dockerfile: Dockerfile
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+    user: ${PUID}:${PGID}
+    env_file: .env
+    ports:
+      - 8184:8080
+    volumes:
+      - /opt/docker/standard/books/kosync:/app/data

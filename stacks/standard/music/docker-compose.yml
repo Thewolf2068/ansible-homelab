@@ -10,7 +10,7 @@ services:
     env_file: .env
     volumes:
       - /opt/docker/standard/music/slskd:/app
-      - "/media/music:/music"
+      - "/media/music/Library:/music"
     restart: always
   
       
@@ -26,5 +26,6 @@ services:
        ND_LOGLEVEL: debug
     volumes:
       - "/opt/docker/standard/music/navidrome/data:/data"
-      - "/media/music:/music:ro"
+      - "/media/music/Library:/music:ro"
+      - "/media/music-old:/music-mp3:ro"
 
