@@ -11,6 +11,7 @@ services:
     volumes:
       - /opt/docker/standard/music/slskd:/app
       - "/media/music/Library:/music"
+      - "/media/music/Ingest:/downloads"
     restart: always
   
       
@@ -28,4 +29,3 @@ services:
       - "/opt/docker/standard/music/navidrome/data:/data"
       - "/media/music/Library:/music:ro"
       - "/media/music-old:/music-mp3:ro"
-

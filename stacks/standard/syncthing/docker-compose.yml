@@ -5,7 +5,7 @@ services:
     env_file: .env
     volumes:
       - /opt/docker/standard/syncthing/config:/config # Where syncthing stores its own settings
-      - /opt/docker/standard/syncthing/files:/data/files
+      - /opt/data/syncthing:/data/files
       - /media/books:/data/books       # THE SAME HOST PATH your Booklore uses
       - /home/ubuntu/Documents:/data/documents
     ports:
