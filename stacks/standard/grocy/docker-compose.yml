@@ -1,0 +1,10 @@
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:${GROCY_VERSION}
+    container_name: grocy
+    environment:
+    volumes:
+      - /opt/docker/standard/grocy:/config
+    ports:
+      - 9283:80
+    restart: unless-stopped

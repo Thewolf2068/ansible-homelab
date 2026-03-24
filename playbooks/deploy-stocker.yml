@@ -120,3 +120,27 @@
             mode: '0600'
           loop: "{{ privileged_stacks.files }}"
           when: query('fileglob', item.path + '/stack.env.j2') | length > 0
+      # Openclaw Config File
+        - name: Template OpenClaw custom config (JSON)
+          ansible.builtin.template:
+            src: ../stacks/privileged/openclaw/my-openclaw.json.j2
+            dest: /opt/stacks/openclaw/my-openclaw.json 
+            owner: root
+            group: root
+            mode: '0640'
+          register: openclaw_config 
+
+        - name: Nuke old OpenClaw state (If it changed)
+          ansible.builtin.file:
+            path: /opt/docker/privileged/openclaw/data/.openclaw/openclaw.json
+            state: absent
+          when: openclaw_config.changed
+
+
+        - name: Restart openclaw if the config changed ( shouldn't happen a lot)
+          community.docker.docker_compose_v2:
+            project_src: /opt/stacks/openclaw
+            state: present
+            recreate: always
+          when: openclaw_config.changed
+

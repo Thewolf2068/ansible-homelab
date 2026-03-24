@@ -17,6 +17,8 @@ tandoor_version: "2.3.6"
 wallabag_version: "2.6.14"
 diun_version: "4.31"
 calibre_version: "9.5.0"
+openclaw_version: "2026.3.22"
+openclaw_browser_version: "0.3.0"
 
 # ==========================================
 # INFRASTRUCTURE (Louislam UI / Helper apps)
