@@ -1,0 +1,10 @@
+- name: Server Setup
+  hosts: myhosts
+  become: true
+  vars_files:
+    - ../group_vars/all/vault.yml
+    - ../group_vars/all/versions.yaml
+  vars:
+    project_root: "{{ playbook_dir }}/.."
+  roles:
+    - docker_stacks
