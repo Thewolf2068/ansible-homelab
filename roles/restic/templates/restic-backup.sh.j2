@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e
+
+REPO="{{ restic_repo_path }}"
+PASSWORD_FILE="/etc/restic/password"
+export RESTIC_PASSWORD_FILE="$PASSWORD_FILE"
+
+restart_stacks() {
+  for stack in /opt/stacks/*; do
+    [ -f "$stack/docker-compose.yml" ] && (cd "$stack" && docker compose start)
+  done
+}
+trap restart_stacks EXIT
+
+# Stop all stacks
+for stack in /opt/stacks/*; do
+    if [ -f "$stack/docker-compose.yml" ]; then
+        (cd "$stack" && docker compose stop)
+    fi
+done
+
+# Run restic backup
+restic -r "$REPO" backup {{ restic_backup_paths | join(' ') }} --tag "daily"
+
+# Prune old snapshots
+restic -r "$REPO" forget --keep-daily {{ restic_keep_daily }} --keep-weekly {{ restic_keep_weekly }} --prune

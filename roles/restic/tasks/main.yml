@@ -1,0 +1,52 @@
+---
+- name: Install restic from Ubuntu repos
+  ansible.builtin.apt:
+    name: restic
+    state: present
+
+- name: Create restic password directory
+  ansible.builtin.file:
+    path: "/etc/restic"
+    state: directory
+    mode: '0700'
+
+- name: Store restic password
+  ansible.builtin.copy:
+    content: "{{ restic_password }}\n"
+    dest: "/etc/restic/password"
+    mode: '0400'
+    owner: root
+    group: root
+  no_log: true
+
+
+- name: Check if restic repo already initialized
+  ansible.builtin.shell:
+    cmd: "restic -r {{ restic_repo_path }} snapshots"
+  environment:
+    RESTIC_PASSWORD_FILE: "/etc/restic/password"
+  register: restic_check
+  failed_when: false
+  changed_when: false
+
+- name: Initialize restic repo if not exists
+  ansible.builtin.shell:
+    cmd: "restic -r {{ restic_repo_path }} init"
+  environment:
+    RESTIC_PASSWORD_FILE: "/etc/restic/password"
+  when: restic_check.rc != 0
+
+
+- name: Copy over backup script
+  ansible.builtin.template:
+    src: restic-backup.sh.j2
+    dest: /usr/local/bin/restic-backup.sh
+    mode: '0755'
+
+- name: Add task to cron
+  ansible.builtin.cron:
+    name: restic nightly backup
+    hour: 3
+    minute: 0
+    job: "/usr/local/bin/restic-backup.sh"
+    user: root
