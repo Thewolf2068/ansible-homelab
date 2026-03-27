@@ -1,0 +1,11 @@
+- name: restart openclaw
+  block:
+    - name: Remove old state file if config changed
+      ansible.builtin.file:
+        path: /opt/docker/privileged/openclaw/data/.openclaw/openclaw.json
+        state: absent
+    - name: Restart openclaw stack
+      community.docker.docker_compose_v2:
+        project_src: /opt/stacks/openclaw
+        state: present
+        recreate: always

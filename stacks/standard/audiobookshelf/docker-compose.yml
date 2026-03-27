@@ -21,7 +21,7 @@ services:
       - /opt/docker/standard/qbittorrent/downloads:/downloads #optional
       - /media/audiobooks:/audiobooks
     ports:
-      - 8080:8080
+      - 8050:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped

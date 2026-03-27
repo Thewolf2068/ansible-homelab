@@ -4,7 +4,10 @@
   vars_files:
     - ../group_vars/all/vault.yml
     - ../group_vars/all/versions.yaml
+    - ../group_vars/all/server_vars.yml
   vars:
     project_root: "{{ playbook_dir }}/.."
   roles:
     - docker_stacks
+    - caddy
+    - fail2ban

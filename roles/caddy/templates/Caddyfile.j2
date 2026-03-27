@@ -1,0 +1,11 @@
+# Root domain
+{{ domain }} {
+    reverse_proxy localhost:{{ subdomain_ports.get(domain, '4533') }}   # fallback to Navidrome
+}
+
+{% for sub in subdomains %}
+# Subdomain: {{ sub }}.{{ domain }}
+{{ sub }}.{{ domain }} {
+    reverse_proxy localhost:{{ subdomain_ports[sub] }}
+}
+{% endfor %}

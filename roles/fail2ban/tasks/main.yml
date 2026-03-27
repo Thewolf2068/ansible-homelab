@@ -1,0 +1,24 @@
+- name: Install fail2ban
+  ansible.builtin.apt:
+    name: fail2ban
+    state: present
+    update_cache: yes
+
+- name: Enable basic jails
+  lineinfile:
+    path: /etc/fail2ban/jail.local
+    create: yes
+    regexp: "^{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^\[sshd\]', line: '[sshd]' }
+    - { regexp: '^enabled\s*=\s*true', line: 'enabled = true' }
+    - { regexp: '^\[nginx-http-auth\]', line: '[nginx-http-auth]' }
+    - { regexp: '^enabled\s*=\s*true', line: 'enabled = true' }
+  notify: restart fail2ban
+
+- name: Ensure fail2ban is enabled and running
+  systemd:
+    name: fail2ban
+    enabled: yes
+    state: started

@@ -84,3 +84,16 @@
         mode: '0600'
       loop: "{{ privileged_stacks.files }}"
       when: query('fileglob', item.path + '/stack.env.j2') | length > 0
+
+
+
+
+
+- name: Template OpenClaw custom config (JSON)
+  ansible.builtin.template:
+    src: "{{ project_root }}/stacks/privileged/openclaw/my-openclaw.json.j2"
+    dest: /opt/stacks/openclaw/my-openclaw.json
+    owner: root
+    group: root
+    mode: '0640'
+  notify: restart openclaw

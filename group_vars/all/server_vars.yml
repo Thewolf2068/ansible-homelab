@@ -1,0 +1,11 @@
+domain: "miquella.dev"
+admin_email: "voxel284@mailbox.org"
+
+
+subdomains:
+  - navidrome
+  - audiobooks
+
+subdomain_ports:
+  navidrome: 4533
+  audiobooks: 13378

@@ -1,0 +1,67 @@
+---
+- name: Install prerequisites for Caddy repository
+  ansible.builtin.apt:
+    name:
+      - curl
+      - apt-transport-https
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: Ensure keyrings directory exists
+  ansible.builtin.file:
+    path: /usr/share/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Caddy GPG key (if not already present)
+  ansible.builtin.get_url:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    dest: /tmp/caddy_gpg.key
+    mode: '0644'
+  register: key_download
+  changed_when: false   # We'll manage idempotence via the next task
+
+- name: Convert GPG key to binary format and place in keyrings
+  ansible.builtin.shell:
+    cmd: gpg --dearmor < /tmp/caddy_gpg.key > /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    creates: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  when: key_download is succeeded
+  changed_when: true
+
+- name: Set permissions on keyring file
+  ansible.builtin.file:
+    path: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    mode: '0644'
+
+- name: Remove temporary GPG key
+  ansible.builtin.file:
+    path: /tmp/caddy_gpg.key
+    state: absent
+
+- name: Add Caddy APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    state: present
+    update_cache: yes
+
+- name: Install Caddy
+  ansible.builtin.apt:
+    name: caddy
+    state: present
+    update_cache: no  # cache already updated
+
+- name: Ensure Caddy service is enabled and started
+  ansible.builtin.systemd:
+    name: caddy
+    enabled: yes
+    state: started
+
+- name: Deploy Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    owner: root
+    group: root
+    mode: '0644'
+  notify: reload caddy
