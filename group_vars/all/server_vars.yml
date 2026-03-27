@@ -5,7 +5,39 @@ admin_email: "voxel284@mailbox.org"
 subdomains:
   - navidrome
   - audiobooks
+  - rss
+  - dockge
+  - qbittorrent
+
+  - calibre
+  - kosync
+  - gitea
+  - soulseek
+  - obsidian
+  - paperless
+  - sync
+  - syncyomi
+  - recipes
+  - uptime
+  - wall
+
+
 
 subdomain_ports:
   navidrome: 4533
   audiobooks: 13378
+  rss: 3080
+  dockge: 5001
+  qbittorrent: 8050
+
+  calibre: 8183
+  kosync: 8184
+  gitea: 3030
+  soulseek: 5030
+  obsidian: 5984
+  paperless: 7000
+  sync: 8384
+  syncyomi: 8283
+  recipes: 7010
+  uptime: 3001
+  wall: 8085
