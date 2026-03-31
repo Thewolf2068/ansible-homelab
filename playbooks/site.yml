@@ -5,7 +5,6 @@
     - ../group_vars/all/vault.yml
     - ../group_vars/all/versions.yaml
     - ../group_vars/all/server_vars.yml
-    - ../group_vars/all/restic.yml
   vars:
     project_root: "{{ playbook_dir }}/.."
   roles:
@@ -20,7 +19,6 @@
         docker_packages_state: present
         docker_users:
           - "{{ server_user }}"
-    - setup
     - hetzner_storage
     - docker_stacks
     - caddy
