@@ -29,7 +29,7 @@
   failed_when: false
   changed_when: false
 
-- name: Initialize restic repo if not exists
+- name: Initialize restic repo if not existsone
   ansible.builtin.shell:
     cmd: "restic -r {{ restic_repo_path }} init"
   environment:
@@ -50,3 +50,27 @@
     minute: 0
     job: "/usr/local/bin/restic-backup.sh"
     user: root
+
+- name: Check if /opt/docker exists
+  ansible.builtin.stat:
+    path: /opt/docker
+  register: docker_dir
+
+- name: Check if restic backup exists for /opt/docker
+  ansible.builtin.shell:
+    cmd: "restic -r {{ restic_repo_path }} snapshots --path /opt/docker --json"
+  environment:
+    RESTIC_PASSWORD_FILE: "/etc/restic/password"
+  register: restic_snapshots
+  changed_when: false
+  failed_when: false
+  when: not docker_dir.stat.exists
+
+- name: Restore /opt/docker from latest backup
+  ansible.builtin.shell:
+    cmd: "restic -r {{ restic_repo_path }} restore latest --path /opt/docker --target /"
+  environment:
+    RESTIC_PASSWORD_FILE: "/etc/restic/password"
+  when:
+    - not docker_dir.stat.exists
+    - restic_snapshots.stdout | from_json | length > 0

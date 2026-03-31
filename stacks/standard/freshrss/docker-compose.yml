@@ -1,11 +1,8 @@
 services:
   freshrss:
-    image: lscr.io/linuxserver/freshrss:${freshrss_version}
+    image: lscr.io/linuxserver/freshrss:${FRESHRSS_VERSION}
     container_name: freshrss
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+    env_file: .env
     volumes:
       - /opt/docker/standard/freshrss/config:/config
     ports:

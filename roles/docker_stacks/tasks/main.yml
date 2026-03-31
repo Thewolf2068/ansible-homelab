@@ -96,4 +96,4 @@
     owner: root
     group: root
     mode: '0640'
-  notify: restart openclaw
+  # notify: restart openclaw

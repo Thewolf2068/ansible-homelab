@@ -9,6 +9,19 @@
   vars:
     project_root: "{{ playbook_dir }}/.."
   roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_edition: ce
+        docker_packages:
+          - "docker-{{ docker_edition }}"
+          - "docker-{{ docker_edition }}-cli"
+          - "containerd.io"
+          - docker-buildx-plugin
+        docker_packages_state: present
+        docker_users:
+          - "{{ server_user }}"
+    - setup
+    - hetzner_storage
     - docker_stacks
     - caddy
     - fail2ban
