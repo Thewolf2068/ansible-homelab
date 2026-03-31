@@ -1,11 +1,14 @@
 # Root domain
 {{ domain }} {
-    reverse_proxy localhost:{{ subdomain_ports.get(domain, '4533') }}   # fallback to Navidrome
+    reverse_proxy localhost:9999   # fallback to Homepage
 }
 
-{% for sub in subdomains %}
-# Subdomain: {{ sub }}.{{ domain }}
+
+{% for service, config in services.items() %}
+{% if config.exposed %}
+{% set sub = config.subdomain | default(service) %}
 {{ sub }}.{{ domain }} {
-    reverse_proxy localhost:{{ subdomain_ports[sub] }}
+    reverse_proxy localhost:{{ config.port }}
 }
+{% endif %}
 {% endfor %}

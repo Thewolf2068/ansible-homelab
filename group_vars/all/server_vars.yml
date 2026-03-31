@@ -1,43 +1,101 @@
+# Global settings
 domain: "miquella.dev"
 admin_email: "voxel284@mailbox.org"
 
+# Services definitions
+services:
+  audiobookshelf: # Audiobookshelf
+    subdomain: audiobooks
+    version: "2.32.1"
+    port: 13378
+    exposed: true
+  navidrome:
+    version: "0.60.3"
+    port: 4533
+    exposed: true
+  freshrss:
+    subdomain: rss
+    version: "1.28.1-ls300"
+    port: 3080
+    exposed: true
+  gitea:
+    version: "1.25.2"
+    port: 3030
+    exposed: true
+  dockge:
+    version: "2.2.1"
+    port: 5001
+    exposed: true
+  qbittorrent:
+    version: "5.1.4-r2-ls442"
+    port: 8050
+    exposed: true
+  calibre:
+    version: "9.5.0"
+    port: 8183
+    exposed: true
+  kosync:
+    version: "v0.17.0"
+    port: 8184
+    exposed: true
+  slskd:
+    subdomain: soulseek
+    version: "0.24.5"       
+    port: 5030
+    exposed: true
+  obsidian_couchdb:
+    subdomain: obsidian
+    version: "3.3"          # CouchDB version
+    port: 5984
+    exposed: true
+  paperless:
+    version: "2.20.3"
+    port: 7000
+    exposed: true
+  syncthing: # syncthing
+    subdomain: sync
+    version: "v2.0.12-ls205"
+    port: 8384
+    exposed: true
+  syncyomi:
+    version: "v1.1.4"
+    port: 8283
+    exposed: true
+  tandoor: # Tandoor
+    subdomain: recipes
+    version: "2.3.6"
+    port: 7010
+    exposed: true
+  uptime_kuma: # Uptime Kuma
+    subdomain: uptime
+    version: "1.23.11"
+    port: 3001
+    exposed: true
+  wallabag:
+    subdomain: wall
+    version: "2.6.14"
+    port: 8085
+    exposed: true
 
-subdomains:
-  - navidrome
-  - audiobooks
-  - rss
-  - dockge
-  - qbittorrent
-
-  - calibre
-  - kosync
-  - gitea
-  - soulseek
-  - obsidian
-  - paperless
-  - sync
-  - syncyomi
-  - recipes
-  - uptime
-  - wall
-
-
-
-subdomain_ports:
-  navidrome: 4533
-  audiobooks: 13378
-  rss: 3080
-  dockge: 5001
-  qbittorrent: 8050
-
-  calibre: 8183
-  kosync: 8184
-  gitea: 3030
-  soulseek: 5030
-  obsidian: 5984
-  paperless: 7000
-  sync: 8384
-  syncyomi: 8283
-  recipes: 7010
-  uptime: 3001
-  wall: 8085
+  # Infrastructure (not exposed via reverse proxy, but used in compose)
+  diun:
+    version: "4.31"
+    exposed: false
+  openclaw:
+    version: "2026.3.22"
+    exposed: false
+  openclaw_browser:
+    version: "0.3.0"
+    exposed: false
+  grocy:
+    version: "v4.6.0-ls318"
+    exposed: false
+  flaresolverr:
+    version: "v3.4.6"
+    exposed: false
+  paperless_broker:
+    version: "8"
+    exposed: false
+  tandoor_db:
+    version: "16-alpine"
+    exposed: false
