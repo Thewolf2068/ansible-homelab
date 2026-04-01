@@ -1,0 +1,34 @@
+- name: Install zram-tools
+  apt:
+    name: zram-tools
+    state: present
+  become: true
+
+- name: Configure zram
+  copy:
+    content: |
+      ALGO=zstd
+      PERCENT=25
+    dest: /etc/default/zramswap
+  become: true
+  notify: restart zramswap
+
+- name: Enable and start zramswap
+  systemd:
+    name: zramswap
+    enabled: true
+    state: started
+  become: true
+
+- name: Remove Ubuntu login banner ads
+  file:
+    path: /etc/update-motd.d/
+    recurse: yes
+    mode: '0644'
+  become: true
+
+- name: Clear static motd
+  copy:
+    content: ""
+    dest: /etc/motd
+  become: true

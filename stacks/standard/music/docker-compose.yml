@@ -12,7 +12,7 @@ services:
       - /opt/docker/standard/music/slskd:/app
       - "/media/music/Library:/music"
       - "/media/music/Ingest:/downloads"
-    restart: always
+    restart: unless-stopped
   
       
   navidrome:

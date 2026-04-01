@@ -18,6 +18,7 @@
         docker_packages_state: present
         docker_users:
           - "{{ server_user }}"
+    - setup
     - hetzner_storage
     - docker_stacks
     - caddy

@@ -1,0 +1,10 @@
+- name: Template OpenClaw custom config (JSON)
+  ansible.builtin.template:
+    src: "openclaw/my-openclaw.json.j2"
+    dest: /opt/stacks/openclaw/my-openclaw.json
+    owner: root
+    group: root
+    mode: '0640'
+  notify: restart openclaw
+
+

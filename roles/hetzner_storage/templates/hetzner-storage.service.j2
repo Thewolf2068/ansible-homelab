@@ -17,7 +17,8 @@ ExecStart=rclone mount hetzner:media /media \
     --transfers 4 \
     --checkers 8 \
     --log-level INFO \
-    --log-file /var/log/rclone.log
+    --log-file /var/log/rclone.log \
+    --allow-other
 ExecStop=/bin/fusermount -uz /media
 Restart=on-failure
 RestartSec=10

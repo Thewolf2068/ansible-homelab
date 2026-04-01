@@ -1,0 +1,83 @@
+- name: Find Standard stacks
+  delegate_to: localhost
+  become: false
+  find:
+    paths: "{{ project_root }}/stacks/standard"
+    file_type: directory
+    recurse: no
+  register: standard_stacks
+
+- name: Deploy Standard Stacks (Force User Permissions)
+  block:
+    - name: Ensure Standard directories exist
+      file:
+        path: "{{ docker_compose_path }}/{{ item.path | basename }}"
+        state: directory
+        owner: "{{ server_user }}"  # ubuntu/1001
+        group: "{{ server_user }}"
+        mode: '0755'
+      loop: "{{ standard_stacks.files }}"
+
+    - name: Sync Standard compose files
+      copy:
+        src: "{{ item.path }}/docker-compose.yml"
+        dest: "{{ docker_compose_path }}/{{ item.path | basename }}/docker-compose.yml"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+      loop: "{{ standard_stacks.files }}"
+
+    - name: Render Standard .env files
+      template:
+        src: "{{ item.path }}/stack.env.j2"
+        dest: "{{ docker_compose_path }}/{{ item.path | basename }}/.env"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+      loop: "{{ standard_stacks.files }}"
+      when: query('fileglob', item.path + '/stack.env.j2') | length > 0
+
+    - name: Enforce Standard Permissions (Recursive)
+      file:
+        path: "{{ docker_compose_path }}/{{ item.path | basename }}"
+        state: directory
+        recurse: yes
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+      loop: "{{ standard_stacks.files }}"
+
+- name: Find Privileged stacks
+  delegate_to: localhost
+  become: false
+  find:
+    paths: "{{ project_root }}/stacks/privileged"
+    file_type: directory
+    recurse: no
+  register: privileged_stacks
+
+- name: Deploy Privileged Stacks (Relaxed Permissions)
+  block:
+    - name: Ensure Privileged directories exist
+      file:
+        path: "{{ docker_compose_path }}/{{ item.path | basename }}"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: '0755'
+      loop: "{{ privileged_stacks.files }}"
+
+    - name: Sync Privileged compose files
+      copy:
+        src: "{{ item.path }}/docker-compose.yml"
+        dest: "{{ docker_compose_path }}/{{ item.path | basename }}/docker-compose.yml"
+        owner: "root"
+        group: "root"
+      loop: "{{ privileged_stacks.files }}"
+
+    - name: Render Privileged .env files
+      template:
+        src: "{{ item.path }}/stack.env.j2"
+        dest: "{{ docker_compose_path }}/{{ item.path | basename }}/.env"
+        owner: "root"
+        group: "root"
+        mode: '0600'
+      loop: "{{ privileged_stacks.files }}"
+      when: query('fileglob', item.path + '/stack.env.j2') | length > 0

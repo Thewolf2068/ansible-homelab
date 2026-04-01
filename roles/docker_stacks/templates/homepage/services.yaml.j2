@@ -1,0 +1,127 @@
+- Media:
+  - Audiobookshelf:
+      icon: sh-audiobookshelf.svg
+      href: https://{{ services.audiobookshelf.subdomain | default('audiobookshelf') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.audiobookshelf.port }}
+      widget:
+        type: audiobookshelf
+        url: http://{{ local_ip }}:{{ services.audiobookshelf.port }}
+        key: {{ homepage_audiobookshelf_api_key }} 
+        fields: ["podcasts", "podcastsDuration", "books", "booksDuration"]
+
+  - Navidrome:
+      icon: sh-navidrome.svg
+      href: https://{{ services.navidrome.subdomain | default('navidrome') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.navidrome.port }}
+      widget:
+        type: navidrome
+        url: http://{{ local_ip }}:{{ services.navidrome.port }}
+        user: {{ homepage_navidrome_user }}
+        token: {{ homepage_navidrome_token }}
+        salt: {{ homepage_navidrome_salt }}
+
+  - Freshrss:
+      icon: sh-freshrss.svg
+      href: https://{{ services.freshrss.subdomain | default('freshrss') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.freshrss.port }}
+      widget:
+        type: freshrss
+        url: http://{{ local_ip }}:{{ services.freshrss.port }}
+        username: {{ homepage_freshrss_username }}
+        password: {{ homepage_freshrss_password }}
+        fields: ["subscriptions", "unread"]
+
+
+- Downloaders:
+  - Slskd:
+      icon: sh-slskd.svg
+      href: https://{{ services.slskd.subdomain | default('slskd') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.slskd.port }}
+      widget:
+        type: slskd
+        url: http://{{ local_ip }}:{{ services.slskd.port }}
+        key: {{ SLSKD_API_KEY }}
+        fields: ["updateStatus", "downloads", "uploads", "sharedFiles"]
+
+
+  - qBittorrent:
+      icon: sh-qbittorrent.svg
+      href: https://{{ services.qbittorrent.subdomain | default('qbittorrent') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.qbittorrent.port }}
+      widget:
+        type: qbittorrent
+        url: https://{{ services.qbittorrent.subdomain | default('qbittorrent') }}.{{ domain }}
+        username: {{ homepage_qbittorrent_username }}
+        password: {{ homepage_qbittorrent_password }}
+        enableLeechProgress: true
+        enableLeechSize: true
+        fields: ["leech", "download", "seed", "upload"]
+
+- Consumption:
+  - Gitea:
+      icon: sh-gitea.svg
+      href: https://{{ services.gitea.subdomain | default('gitea') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.gitea.port }}
+      widget:
+        type: gitea
+        url: http://{{ local_ip }}:{{ services.gitea.port }}
+        key: {{ homepage_gitea_key }}
+        fields: ["repositories", "notifications", "issues"]
+
+  - Paperless:
+      icon: sh-paperless-ngx.svg
+      href: https://{{ services.paperless.subdomain | default('paperless') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.paperless.port }}
+      widget:
+        type: paperlessngx
+        url: http://{{ local_ip }}:{{ services.paperless.port }}
+        username: {{ homepage_paperless_username }}
+        password: {{ homepage_paperless_password }}
+        fields: ["total", "inbox"]
+
+
+  - Mealie:
+      icon: sh-mealie.svg
+      href: https://{{ services.mealie.subdomain | default('mealie') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.mealie.port }}
+      widget:
+        type: mealie
+        url: http://{{ local_ip }}:{{ services.mealie.port }}
+        key: {{ homepage_mealie_key }}
+        version: {{ services.mealie.version }} 
+        fields: ["recipes", "categories", "tags"]
+
+
+- Misc1:
+
+  - Uptime Kuma:
+      icon: sh-uptime-kuma.svg
+      href: https://{{ services.uptime_kuma.subdomain | default('uptime_kuma') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.uptime_kuma.port }}
+      widget:
+        type: uptimekuma
+        url: http://{{ local_ip }}:{{ services.uptime_kuma.port }}
+        slug: "everything"
+        fields: ["up", "down", "uptime", "incident"]
+
+  - Calibre:
+      icon: sh-calibre.svg
+      href: https://{{ services.calibre.subdomain | default('calibre') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.calibre.port }}
+
+- Misc2:
+  - Dockge:
+      icon: sh-dockge.svg
+      href: https://{{ services.dockge.subdomain | default('dockge') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.dockge.port }}
+
+
+  - Syncthing:
+      icon: sh-syncthing.svg
+      href: https://{{ services.syncthing.subdomain | default('syncthing') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.syncthing.port }}
+
+  - Wallabag:
+      icon: sh-wallabag.svg
+      href: https://{{ services.wallabag.subdomain | default('wallabag') }}.{{ domain }}
+      siteMonitor: http://{{ local_ip }}:{{ services.wallabag.port }}

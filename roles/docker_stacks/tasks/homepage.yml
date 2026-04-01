@@ -1,0 +1,31 @@
+- name: Copy over all wallpapers
+  ansible.builtin.copy:
+    src: homepage/images/
+    dest: /opt/docker/standard/homepage/images
+    mode: '0644'
+
+
+- name: Template the settings
+  ansible.builtin.template:
+    src: homepage/settings.yaml.j2
+    dest: /opt/docker/standard/homepage/config/settings.yaml
+    mode: '0644'
+
+
+- name: Template the services
+  ansible.builtin.template:
+    src: homepage/services.yaml.j2
+    dest: /opt/docker/standard/homepage/config/services.yaml
+    mode: '0644'
+
+- name: copy over the widget config
+  ansible.builtin.copy:
+    src: homepage/widgets.yaml
+    dest: /opt/docker/standard/homepage/config/widgets.yaml
+    mode: '0644'
+
+- name: Purge default Homepage bookmarks
+  ansible.builtin.copy:
+    dest: "/opt/docker/standard/homepage/config/bookmarks.yaml"
+    content: ""
+    mode: '0644'

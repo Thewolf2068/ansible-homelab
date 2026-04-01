@@ -1,4 +1,4 @@
-- name: start rclone systemd service
+- name: restart rclone systemd service
   ansible.builtin.systemd_service:
     name: hetzner-storage.service
     enabled: true

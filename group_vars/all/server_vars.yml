@@ -10,7 +10,7 @@ services:
     port: 13378
     exposed: true
   navidrome:
-    version: "0.60.3"
+    version: "0.60.3" 
     port: 4533
     exposed: true
   freshrss:
@@ -23,7 +23,7 @@ services:
     port: 3030
     exposed: true
   dockge:
-    version: "2.2.1"
+    version: "1.5.0"
     port: 5001
     exposed: true
   qbittorrent:
@@ -61,14 +61,14 @@ services:
     version: "v1.1.4"
     port: 8283
     exposed: true
-  tandoor: # Tandoor
+  mealie:
     subdomain: recipes
-    version: "2.3.6"
+    version: "3.14.0"
     port: 7010
     exposed: true
   uptime_kuma: # Uptime Kuma
     subdomain: uptime
-    version: "1.23.11"
+    version: "2.2.1"
     port: 3001
     exposed: true
   wallabag:
@@ -76,6 +76,9 @@ services:
     version: "2.6.14"
     port: 8085
     exposed: true
+  homepage:
+    version: "v1.12.2"
+    exposed: false
 
   # Infrastructure (not exposed via reverse proxy, but used in compose)
   diun:
@@ -95,7 +98,4 @@ services:
     exposed: false
   paperless_broker:
     version: "8"
-    exposed: false
-  tandoor_db:
-    version: "16-alpine"
     exposed: false

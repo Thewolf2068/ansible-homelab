@@ -2,6 +2,7 @@ services:
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:${AUDIOBOOKSHELF_VERSION}
     env_file: .env
+    restart: unless-stopped
     ports:
       - 13378:80
     volumes:
