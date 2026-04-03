@@ -24,3 +24,4 @@
     - caddy
     - fail2ban
     - restic
+    - beets

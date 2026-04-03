@@ -52,7 +52,7 @@ services:
     version: "2.20.3"
     port: 7000
     exposed: true
-  syncthing: # syncthing
+  syncthing: 
     subdomain: sync
     version: "v2.0.12-ls205"
     port: 8384
@@ -78,7 +78,12 @@ services:
     exposed: true
   homepage:
     version: "v1.12.2"
-    exposed: false
+    port: 9999
+    exposed: false # Special Condition, is exposed but to root domain
+  samba:
+    version: "4"
+    port: 4455
+    exposed: true
 
   # Infrastructure (not exposed via reverse proxy, but used in compose)
   diun:
@@ -89,9 +94,6 @@ services:
     exposed: false
   openclaw_browser:
     version: "0.3.0"
-    exposed: false
-  grocy:
-    version: "v4.6.0-ls318"
     exposed: false
   flaresolverr:
     version: "v3.4.6"

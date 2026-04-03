@@ -1,0 +1,90 @@
+directory: /media/music/Library
+library: /opt/docker/standard/music/beets/musiclibrary.db
+
+plugins: fetchart lastgenre musicbrainz lyrics edit zero scrub rewrite embedart
+
+paths:
+    singleton: $artist/$title
+
+zero:
+    fields: albumdisambig
+    update_database: true
+
+musicbrainz:
+  data_source_mismatch_penalty: 0
+
+discogs:
+  search_limit: 5
+  data_source_mismatch_penalty: 1.0
+
+embedart:
+  remove_art_file: yes
+
+
+match:
+    # 1. THE "CHILL OUT" THRESHOLD
+    # previously 0.15. Raising this to 0.25 means "If the match is
+    # at least 75% correct, just trust me and auto-import it."
+    # This stops it from asking you for confirmation on minor differences.
+    strong_rec_thresh: 0.15
+
+    max_rec:
+        missing_tracks: none
+        unmatched_tracks: medium
+
+    distance_weights:
+        source: 2.0
+
+        # 2. LOWER ARTIST WEIGHT
+        # previously 3.0. We lower this to 1.0 so that missing "The Alchemist"
+        # or "feat. X" doesn't tank the score.
+        artist: 1.0
+
+        # 3. KEEP ALBUM WEIGHT HIGH
+        # We still want to ensure we aren't matching "Alfredo" to "Bandana".
+        album: 3.0
+
+        media: 1.0
+        mediums: 0.5
+        year: 1.0
+
+        # 4. STRICT COUNTRY (From our previous fix)
+        # We keep this high to avoid the Japanese imports.
+        country: 4.0
+
+        # 5. IGNORE PUNCTUATION/TYPOS
+        # previously 1.25. Lowering to 0.5 means "Mar-a-Lago" vs "Mar A Lago"
+        # will effectively be ignored.
+        track_title: 0.5
+        track_artist: 0.5
+
+    preferred:
+        countries: ["US", "GB|UK"]
+        media: ["CD", "Digital Media|File"]
+        original_year: yes
+
+lyrics:
+    auto: yes
+    sources: [lrclib]
+    synced: yes
+
+
+import:
+    move: yes
+    write: yes
+
+lastgenre:
+    canonical: yes
+    count: 4
+
+clutter:
+  - "Thumbs.DB"
+  - ".DS_Store"
+  - "*.lrc"
+  - "*.jpg"
+  - "*.png"
+  - "*.nfo"
+  - "*.cue"
+  - "*.log"
+  - "*.m3u"
+  - "*.sfv"

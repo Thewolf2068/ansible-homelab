@@ -1,0 +1,60 @@
+- name: Install pipx from apt (older version)
+  ansible.builtin.apt:
+    name: 
+      - pipx
+      - python3-pip
+    state: present
+
+- name: Upgrade pipx to latest version using pipx itself
+  ansible.builtin.command:
+    cmd: pipx install pipx
+  become_user: "{{ server_user }}"
+  register: pipx_upgrade
+  changed_when: "'is already installed' not in pipx_upgrade.stderr"
+  failed_when: false
+
+
+- name: Ensure pipx is in PATH
+  ansible.builtin.command: pipx ensurepath
+  become_user: "{{ server_user }}"
+  changed_when: false
+
+
+- name: Install beets with lyrics and web plugins
+  community.general.pipx:
+    name: beets
+    source: 'beets[lyrics,fetchart,lastgenre,musicbrainz,edit,zero,scrub,rewrite,embedart]'
+    state: present
+    executable: "/home/{{ server_user }}/.local/bin/pipx"
+  become_user: "{{ server_user }}"
+
+- name: ensure beets config path exists
+  ansible.builtin.file:
+    state: directory
+    path: /opt/docker/standard/music/beets/config
+    mode: '0755'
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+- name: Copy over beet config
+  ansible.builtin.copy:
+    src: config.yaml
+    dest: /opt/docker/standard/music/beets/config/config.yaml
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+
+- name: Ensure beets dir is set
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    regexp: '^BEETSDIR='
+    line: BEETSDIR=/opt/docker/standard/music/beets/config
+
+- name: Add beet-ingest function to .bashrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ server_user }}/.bashrc"
+    marker: "# {mark} beet-ingest"
+    block: |
+      beet-ingest() {
+        beet import "${1:-/media/music/Ingest}"
+      }

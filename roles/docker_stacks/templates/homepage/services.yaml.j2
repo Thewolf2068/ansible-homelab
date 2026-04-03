@@ -2,6 +2,7 @@
   - Audiobookshelf:
       icon: sh-audiobookshelf.svg
       href: https://{{ services.audiobookshelf.subdomain | default('audiobookshelf') }}.{{ domain }}
+      description: Audiobook and podcast server
       siteMonitor: http://{{ local_ip }}:{{ services.audiobookshelf.port }}
       widget:
         type: audiobookshelf
@@ -12,6 +13,7 @@
   - Navidrome:
       icon: sh-navidrome.svg
       href: https://{{ services.navidrome.subdomain | default('navidrome') }}.{{ domain }}
+      description: Music streaming server
       siteMonitor: http://{{ local_ip }}:{{ services.navidrome.port }}
       widget:
         type: navidrome
@@ -23,6 +25,7 @@
   - Freshrss:
       icon: sh-freshrss.svg
       href: https://{{ services.freshrss.subdomain | default('freshrss') }}.{{ domain }}
+      description: RSS feed aggregator
       siteMonitor: http://{{ local_ip }}:{{ services.freshrss.port }}
       widget:
         type: freshrss
@@ -31,11 +34,11 @@
         password: {{ homepage_freshrss_password }}
         fields: ["subscriptions", "unread"]
 
-
 - Downloaders:
   - Slskd:
       icon: sh-slskd.svg
       href: https://{{ services.slskd.subdomain | default('slskd') }}.{{ domain }}
+      description: Soulseek client for music discovery
       siteMonitor: http://{{ local_ip }}:{{ services.slskd.port }}
       widget:
         type: slskd
@@ -43,10 +46,10 @@
         key: {{ SLSKD_API_KEY }}
         fields: ["updateStatus", "downloads", "uploads", "sharedFiles"]
 
-
   - qBittorrent:
       icon: sh-qbittorrent.svg
       href: https://{{ services.qbittorrent.subdomain | default('qbittorrent') }}.{{ domain }}
+      description: Torrent client
       siteMonitor: http://{{ local_ip }}:{{ services.qbittorrent.port }}
       widget:
         type: qbittorrent
@@ -61,6 +64,7 @@
   - Gitea:
       icon: sh-gitea.svg
       href: https://{{ services.gitea.subdomain | default('gitea') }}.{{ domain }}
+      description: Self-hosted Git service
       siteMonitor: http://{{ local_ip }}:{{ services.gitea.port }}
       widget:
         type: gitea
@@ -71,6 +75,7 @@
   - Paperless:
       icon: sh-paperless-ngx.svg
       href: https://{{ services.paperless.subdomain | default('paperless') }}.{{ domain }}
+      description: Document management system
       siteMonitor: http://{{ local_ip }}:{{ services.paperless.port }}
       widget:
         type: paperlessngx
@@ -79,10 +84,10 @@
         password: {{ homepage_paperless_password }}
         fields: ["total", "inbox"]
 
-
   - Mealie:
       icon: sh-mealie.svg
       href: https://{{ services.mealie.subdomain | default('mealie') }}.{{ domain }}
+      description: Recipe manager and meal planner
       siteMonitor: http://{{ local_ip }}:{{ services.mealie.port }}
       widget:
         type: mealie
@@ -91,12 +96,11 @@
         version: {{ services.mealie.version }} 
         fields: ["recipes", "categories", "tags"]
 
-
 - Misc1:
-
   - Uptime Kuma:
       icon: sh-uptime-kuma.svg
       href: https://{{ services.uptime_kuma.subdomain | default('uptime_kuma') }}.{{ domain }}
+      description: Service uptime monitoring
       siteMonitor: http://{{ local_ip }}:{{ services.uptime_kuma.port }}
       widget:
         type: uptimekuma
@@ -107,21 +111,24 @@
   - Calibre:
       icon: sh-calibre.svg
       href: https://{{ services.calibre.subdomain | default('calibre') }}.{{ domain }}
+      description: Ebook library manager
       siteMonitor: http://{{ local_ip }}:{{ services.calibre.port }}
 
 - Misc2:
   - Dockge:
       icon: sh-dockge.svg
       href: https://{{ services.dockge.subdomain | default('dockge') }}.{{ domain }}
+      description: Docker compose stack manager
       siteMonitor: http://{{ local_ip }}:{{ services.dockge.port }}
-
 
   - Syncthing:
       icon: sh-syncthing.svg
       href: https://{{ services.syncthing.subdomain | default('syncthing') }}.{{ domain }}
+      description: Continuous file synchronization
       siteMonitor: http://{{ local_ip }}:{{ services.syncthing.port }}
 
   - Wallabag:
       icon: sh-wallabag.svg
       href: https://{{ services.wallabag.subdomain | default('wallabag') }}.{{ domain }}
+      description: Read-it-later service
       siteMonitor: http://{{ local_ip }}:{{ services.wallabag.port }}

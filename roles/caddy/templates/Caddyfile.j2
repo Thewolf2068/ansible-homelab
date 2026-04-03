@@ -1,13 +1,34 @@
-# Root domain
-{{ domain }} {
-    reverse_proxy localhost:9999   # fallback to Homepage
+# Security headers snippet
+(security_headers) {
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
+        -Server
+    }
+}
+(block_ai_bots) { # best effort, but not important enough to setup a proper list or something. Dogshit companies will always find their way around it 
+    @ai_bots {
+        header_regexp User-Agent `(GPTBot|ChatGPT-User|Google-Extended|CCBot|anthropic-ai|ClaudeBot|cohere-ai|FacebookBot|Omgilibot|PerplexityBot|YouBot)`
+    }
+    respond @ai_bots "Access Denied" 403
 }
 
+# Root domain – fallback homepage
+{{ domain }} {
+    import security_headers
+    import block_ai_bots
+    reverse_proxy localhost:{{ services.homepage.port | default(9999) }}
+}
 
 {% for service, config in services.items() %}
 {% if config.exposed %}
 {% set sub = config.subdomain | default(service) %}
 {{ sub }}.{{ domain }} {
+    import security_headers
+    import block_ai_bots
     reverse_proxy localhost:{{ config.port }}
 }
 {% endif %}
