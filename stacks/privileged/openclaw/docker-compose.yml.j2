@@ -1,0 +1,24 @@
+services:
+  openclaw:
+    image: coollabsio/openclaw:${OPENCLAW_VERSION}
+    ports:
+      - 8008:8080
+    env_file: .env
+    volumes:
+      - /opt/docker/privileged/openclaw/data:/data
+      - ./my-openclaw.json:/app/config/openclaw.json
+    depends_on:
+      - browser
+    restart: unless-stopped
+
+  browser:
+    image: coollabsio/openclaw-browser:${OPENCLAW_BROWSER_VERSION}
+    env_file: .env
+    volumes:
+      - /opt/docker/privileged/openclaw/browser:/config
+    shm_size: 2g
+    restart: unless-stopped
+
+volumes:
+  openclaw-data:
+  browser-data:

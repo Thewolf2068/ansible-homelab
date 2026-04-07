@@ -1,0 +1,40 @@
+services:
+  slskd:
+    image: slskd/slskd:${SLSKD_VERSION}
+    container_name: slskd
+    user: 1001:1001
+    ports:
+      - "5030:5030"
+      - "5031:5031"
+      - "50300:50300"
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/music/slskd:/app
+      - "/media/music/Library:/music"
+      - "/media/music/Ingest:/downloads"
+    restart: unless-stopped
+    labels:
+      glance.name: Soulseek
+      glance.icon: sh:slskd
+      glance.url: https://{{ services.slskd.subdomain | default('slskd') }}.{{ domain }}
+      glance.hide: false
+      
+  navidrome:
+    image: deluan/navidrome:${NAVIDROME_VERSION}
+    user: 1001:1001 # should be owner of volumes
+    ports:
+      - "4533:4533"
+    env_file: .env
+    restart: unless-stopped
+    environment:
+      # Optional: put your config options customization here. Examples:
+       ND_LOGLEVEL: debug
+    volumes:
+      - "/opt/docker/standard/music/navidrome/data:/data"
+      - "/media/music/Library:/music:ro"
+      - "/media/music-old:/music-mp3:ro"
+    labels:
+      glance.name: Navidrome
+      glance.icon: sh:navidrome
+      glance.url: https://{{ services.navidrome.subdomain | default('navidrome') }}.{{ domain }}
+      glance.hide: false

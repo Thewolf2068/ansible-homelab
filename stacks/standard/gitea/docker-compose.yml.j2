@@ -1,0 +1,26 @@
+networks:
+  gitea:
+    external: false
+
+services:
+  server:
+    image: docker.gitea.com/gitea:${GITEA_VERSION}
+    container_name: gitea
+    environment:
+      - USER_UID=1001
+      - USER_GID=1001
+    restart: unless-stopped
+    networks:
+      - gitea
+    volumes:
+      - /opt/docker/standard/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3030:3000"
+      - "222:22"
+    labels:
+      glance.name: Gitea
+      glance.icon: sh:gitea
+      glance.url: https://{{ services.gitea.subdomain | default('gitea') }}.{{ domain }}
+      glance.hide: false

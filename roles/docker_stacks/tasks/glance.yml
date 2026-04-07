@@ -1,0 +1,23 @@
+- name: Ensure that glance config directory exists
+  ansible.builtin.file:
+    path: /opt/docker/privileged/glance/config/modules
+    state: directory
+    mode: '0755'
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+- name: Template over main config file
+  ansible.builtin.template:
+    src: glance/glance.yml.j2
+    dest: /opt/docker/privileged/glance/config/glance.yml
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+
+- name: Copy over all config modules
+  ansible.builtin.copy:
+    src: glance/
+    dest: /opt/docker/privileged/glance/config/modules/
+    mode: '0644'
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+

@@ -1,0 +1,19 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v${MEALIE_VERSION}
+    container_name: mealie
+    restart: unless-stopped
+    env_file: .env
+    ports:
+        - "7010:9000" 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - /opt/docker/standard/mealie:/app/data/
+    labels:
+      glance.name: Mealie
+      glance.icon: sh:mealie
+      glance.url: https://{{ services.mealie.subdomain | default('mealie') }}.{{ domain }}
+      glance.hide: false

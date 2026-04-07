@@ -19,8 +19,8 @@
       loop: "{{ standard_stacks.files }}"
 
     - name: Sync Standard compose files
-      copy:
-        src: "{{ item.path }}/docker-compose.yml"
+      template:
+        src: "{{ item.path }}/docker-compose.yml.j2"
         dest: "{{ docker_compose_path }}/{{ item.path | basename }}/docker-compose.yml"
         owner: "{{ server_user }}"
         group: "{{ server_user }}"
@@ -65,8 +65,8 @@
       loop: "{{ privileged_stacks.files }}"
 
     - name: Sync Privileged compose files
-      copy:
-        src: "{{ item.path }}/docker-compose.yml"
+      template:
+        src: "{{ item.path }}/docker-compose.yml.j2"
         dest: "{{ docker_compose_path }}/{{ item.path | basename }}/docker-compose.yml"
         owner: "root"
         group: "root"

@@ -80,10 +80,10 @@ services:
     version: "v1.12.2"
     port: 9999
     exposed: false # Special Condition, is exposed but to root domain
-  samba:
-    version: "4"
-    port: 4455
-    exposed: true
+  glance:
+    version: "v0.8.4"
+    port: 9998
+    exposed: false
 
   # Infrastructure (not exposed via reverse proxy, but used in compose)
   diun:

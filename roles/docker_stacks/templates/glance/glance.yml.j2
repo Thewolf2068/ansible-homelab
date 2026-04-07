@@ -1,0 +1,19 @@
+pages:
+  - $include: ./modules/tech.yml
+  - $include: ./modules/politics.yml
+  - $include: ./modules/gaming.yml
+
+
+
+auth:
+  secret-key: {{ glance_secret_key }}
+  users:
+    {{ glance_username }}:
+      password: {{ glance_password }}
+
+theme:
+  background-color: 229 19 23
+  contrast-multiplier: 1.2
+  primary-color: 222 74 74
+  positive-color: 96 44 68
+  negative-color: 359 68 71

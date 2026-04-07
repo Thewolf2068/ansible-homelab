@@ -20,7 +20,7 @@
 {{ domain }} {
     import security_headers
     import block_ai_bots
-    reverse_proxy localhost:{{ services.homepage.port | default(9999) }}
+    reverse_proxy localhost:{{ services.glance.port | default(9999) }}
 }
 
 {% for service, config in services.items() %}

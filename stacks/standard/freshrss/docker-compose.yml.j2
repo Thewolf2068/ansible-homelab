@@ -1,0 +1,15 @@
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:${FRESHRSS_VERSION}
+    container_name: freshrss
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/freshrss/config:/config
+    ports:
+      - 3080:80
+    restart: unless-stopped
+    labels:
+      glance.name: FreshRSS
+      glance.icon: sh:freshrss
+      glance.url: https://{{ services.freshrss.subdomain | default('freshrss') }}.{{ domain }}
+      glance.hide: false

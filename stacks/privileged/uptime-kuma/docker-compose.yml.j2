@@ -1,0 +1,13 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:${UPTIME_KUMA_VERSION}
+    restart: unless-stopped
+    volumes:
+      - /opt/docker/privileged/uptime-kuma:/app/data
+    ports:
+      - "3001:3001"
+    labels:
+      glance.name: Uptime Kuma
+      glance.icon: sh:uptime-kuma
+      glance.url: https://{{ services.uptime_kuma.subdomain | default('uptime_kuma') }}.{{ domain }}
+      glance.hide: false

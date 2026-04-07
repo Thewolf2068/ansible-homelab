@@ -1,0 +1,38 @@
+services:
+  broker:
+    image: docker.io/library/redis:${PAPERLESS_BROKER_VERSION} 
+    restart: unless-stopped
+    volumes:
+      - /opt/docker/standard/paperless-ngx/redisdata:/data
+    labels:
+      glance.name: Broker
+      glance.parent: paperless
+      glance.hide: false
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:${PAPERLESS_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - broker
+    ports:
+      - "7000:8000"
+    volumes:
+      - /opt/docker/standard/paperless-ngx/data:/usr/src/paperless/data
+      - /opt/docker/standard/paperless-ngx/media:/usr/src/paperless/media
+      - /opt/docker/standard/paperless-ngx/export:/usr/src/paperless/export
+      - /opt/docker/standard/paperless-ngx/consume:/usr/src/paperless/consume
+    env_file: .env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+    labels:
+      glance.name: Paperless NGX
+      glance.icon: sh:paperless-ngx
+      glance.url: https://{{ services.paperless.subdomain | default('paperless') }}.{{ domain }}
+      glance.id: paperless
+      glance.hide: false
+
+
+volumes:
+  data:
+  media:
+  redisdata:

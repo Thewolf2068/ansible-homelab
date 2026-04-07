@@ -1,0 +1,12 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock     
+      - /opt/docker/privileged/glance/config:/app/config
+      - /opt/docker/privileged/glance/assets:/app/assets
+    ports:
+      - 9998:8080

@@ -1,0 +1,57 @@
+- name: Gaming
+  columns:
+    - size: small
+      widgets:
+        - type: twitch-channels
+          channels:
+            - supertf
+            - Zerggyyyy
+            - DeathyDL
+            - eido
+            - aimbotcalvin
+            - Surefour
+            - lystic_
+    - size: full
+      widgets:
+      - type: group
+        widgets:
+        - type: rss
+          title: Patch Notes
+          style: vertical-list
+          collapse-after: 10
+          feeds:
+            - url: https://forums.playdeadlock.com/forums/changelog.10/index.rss
+              title: Deadlock
+        - type: rss
+          title: News
+          style: vertical-list
+          collapse-after: 10
+          feeds:
+            - url: https://www.gamesindustry.biz/feed/news
+              title: GamesIndustry News
+      - type: videos
+        style: horizontal-cards
+        collapse-after-rows: 4
+        channels:
+          - UCTKWlp5ndW59BUGANtV-DDA # Zerggy
+          - UCj929zzQbCYGBAUX0Tod4Eg # Deathy
+          - UCrA6aasknVkC7_KUEYcb7nA # Lystic
+          - UC7ZUmtySp0bx2lw_1VGw3Yg # SuperTF
+          - UC2vjSA6XOMUtAp72h_EelCA # Poshypop
+    - size: small
+      widgets:
+      - type: clock
+        hour-format: 24h
+        timezones:
+          - timezone: Europe/Berlin
+            label: Karlsruhe
+          - timezone: America/New_York
+            label: New York
+          - timezone: Asia/Tokyo
+            label: Tokyo
+      - type: weather
+        units: metric
+        hour-format: 24h
+        location: Karlsruhe, Germany
+      - type: calendar
+        first-day-of-week: monday

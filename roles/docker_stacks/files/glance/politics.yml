@@ -1,0 +1,83 @@
+- name: Politics
+  head-widgets:
+    - type: markets
+      hide-header: true
+      markets:
+        - symbol: SPY
+          name: S&P 500
+        - symbol: NVDA
+          name: NVIDIA
+        - symbol: AAPL
+          name: Apple
+        - symbol: MSFT
+          name: Microsoft
+  columns:
+    - size: small
+      widgets: 
+      - type: videos
+        style: vertical-list
+        collapse-after: 15
+        channels:
+          - UCdBXOyqr8cDshsp7kcKDAkg
+          - UCUzmizB92LJ9oxf5T_snZNA
+
+    - size: full
+      widgets:
+      - type: group
+        widgets:
+        - type: rss
+          title: Investigative & Analysis
+          style: vertical-list
+          collapse-after: 5
+          feeds:
+            - url: https://theintercept.com/feed/?rss
+              title: The Intercept
+            - url: https://www.ft.com/rss/home/uk
+              title: Financial Times
+        - type: rss
+          title: Global Wire (High Volume)
+          style: vertical-list
+          collapse-after: 5
+          feeds:
+            - url: https://www.aljazeera.com/xml/rss/all.xml
+              title: Al Jazeera
+        - type: rss
+          title: Deutsch
+          style: vertical-list
+          collapse-after: 10
+          feeds:
+            - url: https://www.tagesschau.de/inland/innenpolitik/index~rss2.xml
+              title: Tagesschau - Innenpolitik
+            - url: https://www.zdf.de/rss/zdf/nachrichten
+              title: ZDFheute
+      - type: bookmarks
+        groups:
+          - title: Finance
+            color: 30 100 50
+            links:
+              - title: Scalable Capital
+                url: https://scalable.capital/
+              - title: C24 Bank
+                url: https://www.c24.de/
+              - title: JustETF
+                url: https://www.justetf.com/
+              - title: Finanzfluss
+                url: https://www.finanzfluss.de/
+
+    - size: small
+      widgets:
+      - type: clock
+        hour-format: 24h
+        timezones:
+          - timezone: Europe/Berlin
+            label: Karlsruhe
+          - timezone: America/New_York
+            label: New York
+          - timezone: Asia/Tokyo
+            label: Tokyo
+      - type: weather
+        units: metric
+        hour-format: 24h
+        location: Karlsruhe, Germany
+      - type: calendar
+        first-day-of-week: monday
