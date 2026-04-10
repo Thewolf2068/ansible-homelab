@@ -1,12 +1,11 @@
 services:
-  couchdb:
-    image: couchdb:${COUCHDB_VERSION}
-    container_name: couchdb-for-ols
-    user: 1001:1001
+  couchdb-livesync:
+    image: ghcr.io/thewolf2068/obsidian-livesync-couchdb:${OBSIDIAN_LIVESYNC_VERSION}
+    container_name: couchdb-livesync
+    user: ${PUID}:${PGID}
     env_file: .env
     volumes:
-      - /opt/docker/standard/obsidian/data:/opt/couchdb/data
-      - /opt/docker/standard/obsidian/etc:/opt/couchdb/etc/local.d
+      - /opt/docker/standard/obsidian:/opt/couchdb/data
     ports:
       - 5984:5984
     restart: unless-stopped

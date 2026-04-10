@@ -11,22 +11,16 @@
       widgets:
         - type: group
           widgets:
+            - type: hacker-news
+              limit: 15
+              collapse-after: 5
             - type: rss
-              title: English
+              title: News
               style: vertical-list
               collapse-after: 6
               feeds:
-              - url: https://selfh.st/rss/
-                title: Selfhst
-            - type: rss
-              title: German
-              style: vertical-list
-              collapse-after: 6
-              feeds:
-                - url: https://www.heise.de/rss/heise-Rubrik-IT-atom.xml
-                  title: Heise
-                - url: https://netzpolitik.org/feed/
-                  title: Netzpolitik
+                - url: https://archlinux.org/feeds/news/
+                  title: Arch
         - type: docker-containers
           hide-by-default: true
     - size: small

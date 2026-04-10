@@ -43,9 +43,9 @@ services:
     version: "0.24.5"       
     port: 5030
     exposed: true
-  obsidian_couchdb:
+  obsidian_livesync:
     subdomain: obsidian
-    version: "3.3"          # CouchDB version
+    version: "1"
     port: 5984
     exposed: true
   paperless:

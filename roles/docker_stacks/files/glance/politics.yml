@@ -23,33 +23,12 @@
 
     - size: full
       widgets:
-      - type: group
-        widgets:
-        - type: rss
-          title: Investigative & Analysis
-          style: vertical-list
-          collapse-after: 5
-          feeds:
-            - url: https://theintercept.com/feed/?rss
-              title: The Intercept
-            - url: https://www.ft.com/rss/home/uk
-              title: Financial Times
-        - type: rss
-          title: Global Wire (High Volume)
-          style: vertical-list
-          collapse-after: 5
-          feeds:
-            - url: https://www.aljazeera.com/xml/rss/all.xml
-              title: Al Jazeera
-        - type: rss
-          title: Deutsch
-          style: vertical-list
-          collapse-after: 10
-          feeds:
-            - url: https://www.tagesschau.de/inland/innenpolitik/index~rss2.xml
-              title: Tagesschau - Innenpolitik
-            - url: https://www.zdf.de/rss/zdf/nachrichten
-              title: ZDFheute
+
+      - type: iframe
+
+        source: "https://s.tradingview.com/embed-widget/mini-symbol-overview/?symbol=XETR%3AVWCE&colorTheme=dark&dateRange=12M&isTransparent=true&autosize=true&trendLineColor=%232962FF&underLineColor=rgba(41%2C%2098%2C%20255%2C%200.3)"
+        height: 350
+
       - type: bookmarks
         groups:
           - title: Finance
