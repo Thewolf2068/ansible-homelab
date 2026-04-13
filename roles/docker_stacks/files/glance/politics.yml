@@ -18,8 +18,9 @@
         style: vertical-list
         collapse-after: 15
         channels:
-          - UCdBXOyqr8cDshsp7kcKDAkg
-          - UCUzmizB92LJ9oxf5T_snZNA
+          - UCdBXOyqr8cDshsp7kcKDAkg # Big A ?
+          - UCUzmizB92LJ9oxf5T_snZNA # BadEmpanada
+          - UCjY9R3_6sxfUViabj93Vnhw # BadEmpanada Live
 
     - size: full
       widgets:
