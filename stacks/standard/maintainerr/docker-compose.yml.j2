@@ -1,0 +1,21 @@
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:{{ services.maintainerr.version }}
+    container_name: maintainerr
+    user: {{ PUID }}:{{ PGID }}
+    volumes:
+      - /opt/docker/standard/arr/maintainerr:/opt/data
+    env_file: .env
+    ports:
+      - 6246:6246
+    restart: unless-stopped
+    labels:
+      glance.name: Maintainerr
+      glance.icon: sh:maintainerr
+      glance.url: https://{{ services.maintainerr.subdomain | default('maintainerr') }}.{{ domain }}
+      glance.hide: false
+
+networks:
+  default:
+    external: true
+    name: media_network

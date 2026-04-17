@@ -1,0 +1,21 @@
+services:
+  jellyfin:
+      image: lscr.io/linuxserver/jellyfin:{{ services.jellyfin.version }}
+      container_name: jellyfin
+      env_file: .env
+      volumes:
+        - /opt/docker/standard/jellyfin:/config
+        - /media:/media 
+      ports:
+        - 8096:8096
+      restart: unless-stopped
+      labels:
+        glance.name: Jellyfin
+        glance.icon: sh:jellyfin
+        glance.url: https://{{ services.jellyfin.subdomain | default('jellyfin') }}.{{ domain }}
+        glance.hide: false
+
+networks:
+  default:
+    external: true
+    name: media_network

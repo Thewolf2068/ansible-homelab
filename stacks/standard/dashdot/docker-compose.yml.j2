@@ -1,0 +1,15 @@
+services:
+  dashdot:
+    container_name: dashdot
+    image: mauricenino/dashdot:{{ services.dashdot.version }}
+    restart: unless-stopped
+    privileged: true
+    env_file: .env
+    ports:
+      - {{ services.dashdot.port }}:3001
+    volumes:
+      - /:/mnt/host:ro
+networks:
+  default:
+    external: true
+    name: dashboard_network

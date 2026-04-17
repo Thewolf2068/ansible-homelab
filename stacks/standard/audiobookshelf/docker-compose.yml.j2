@@ -1,6 +1,6 @@
 services:
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:${AUDIOBOOKSHELF_VERSION}
+    image: ghcr.io/advplyr/audiobookshelf:{{ services.audiobookshelf.version }}
     env_file: .env
     restart: unless-stopped
     ports:
@@ -16,23 +16,4 @@ services:
       glance.name: Audiobookshelf
       glance.icon: sh:audiobookshelf
       glance.url: https://{{ services.audiobookshelf.subdomain | default('audiobookshelf') }}.{{ domain }}
-      glance.hide: false
-
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_VERSION}
-    container_name: qbittorrent
-    env_file: .env
-    volumes:
-      - /opt/docker/standard/qbittorrent/appdata:/config
-      - /opt/docker/standard/qbittorrent/downloads:/downloads #optional
-      - /media/audiobooks:/audiobooks
-    ports:
-      - 8050:8080
-      - 6881:6881
-      - 6881:6881/udp
-    restart: unless-stopped
-    labels:
-      glance.name: qBittorrent
-      glance.icon: sh:qbittorrent
-      glance.url: https://{{ services.qbittorrent.subdomain | default('qbittorrent') }}.{{ domain }}
       glance.hide: false

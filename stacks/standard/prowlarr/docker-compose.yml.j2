@@ -1,0 +1,57 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:{{ services.prowlarr.version }}
+    container_name: prowlarr
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/arr/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    labels:
+      glance.name: Prowlarr
+      glance.icon: sh:prowlarr
+      glance.url: https://{{ services.prowlarr.subdomain | default('prowlarr') }}.{{ domain }}
+      glance.hide: false
+
+
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:{{ services.qbittorrent.version }}
+    container_name: qbittorrent
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/qbittorrent/appdata:/config
+      - /media:/media
+    ports:
+      - 8050:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    labels:
+      glance.name: qBittorrent
+      glance.icon: sh:qbittorrent
+      glance.url: https://{{ services.qbittorrent.subdomain | default('qbittorrent') }}.{{ domain }}
+      glance.hide: false
+
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:{{ services.sabnzbd.version }}
+    container_name: sabnzbd
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/sabnzbd:/config
+      - /media:/media
+    ports:
+      - 8010:8080
+    restart: unless-stopped
+    labels:
+      glance.name: Sabnzbd
+      glance.icon: sh:sabnzbd
+      glance.url: https://{{ services.sabnzbd.subdomain | default('sabnzbd') }}.{{ domain }}
+      glance.hide: false
+
+networks:
+  default:
+    external: true
+    name: media_network

@@ -1,0 +1,20 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:{{ services.sonarr.version }}
+    container_name: sonarr
+    env_file: .env
+    volumes:
+      - /opt/docker/standard/arr/sonarr:/config
+      - /media:/media
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    labels:
+      glance.name: Sonarr
+      glance.icon: sh:sonarr
+      glance.url: https://{{ services.sonarr.subdomain | default('sonarr') }}.{{ domain }}
+      glance.hide: false
+networks:
+  default:
+    external: true
+    name: media_network

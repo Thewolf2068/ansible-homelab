@@ -84,6 +84,50 @@ services:
     version: "v0.8.4"
     port: 9998
     exposed: false
+  prowlarr:
+    version: "2.3.5"
+    port: 9696
+    exposed: true
+  sonarr:
+    version: "4.0.17"
+    port: 8989
+    exposed: true
+  jellyfin:
+    version: "10.11.8"
+    port: 8096
+    exposed: true
+  maintainerr:
+    version: "3.7.0"
+    port: 6246
+    exposed: true
+  radarr:
+    version: "6.1.1"
+    port: 7878
+    exposed: true
+  bazarr:
+    version: "1.5.6"
+    port: 6767
+    exposed: true
+  seerr:
+    version: "v3.2.0"
+    port: 5055
+    exposed: true
+  sabnzbd:
+    version: "4.5.5"
+    port: 8010
+    exposed: true
+  homarr:
+    version: "v1.59.1"
+    port: 7575
+    exposed: true
+  dashdot:
+    version: "6.3.4"
+    port: 3010
+    exposed: false
+  speedtest:
+    version: "1.13.12"
+    port: 8182
+    exposed: false
 
   # Infrastructure (not exposed via reverse proxy, but used in compose)
   diun:

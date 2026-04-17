@@ -1,0 +1,16 @@
+services:
+  speedtest:
+    image: lscr.io/linuxserver/speedtest-tracker:{{ services.speedtest.version }}
+    restart: unless-stopped
+    container_name: speedtest
+    env_file: .env
+    ports:
+      - {{ services.speedtest.port }}:80
+    volumes:
+      - /opt/docker/standard/speedtest-tracker:/config
+
+
+networks:
+  default:
+    external: true
+    name: dashboard_network
